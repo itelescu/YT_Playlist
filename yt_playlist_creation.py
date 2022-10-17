@@ -10,16 +10,17 @@ from time import sleep
 
 credentials = None
 
+# If credentials are saved in pickled file (from previous successful logins) in current directory,
+# then we will load them in
 if os.path.exists('token.pickle'):
-    # print('Loading Credentials ...')
+    print('Loading Credentials ...')
     with open('token.pickle', 'rb') as token:
         credentials = pickle.load(token)
 
-
+# If there are no valid credentials or those are missing then we will Request new one or will refresh for access token
 if not credentials or not credentials.valid:
     if credentials and credentials.expired and credentials.refresh_token:
-        # print('Refreshing Access Token...')
-        # Make the web request
+        print('Refreshing Access Token...')
         credentials.refresh(Request())
     else:
         print('Fetching New Tokens...')
@@ -45,13 +46,42 @@ if not credentials or not credentials.valid:
 youtube_service_obj = build('youtube', 'v3', credentials=credentials)
 
 
+def playlist_id():
+    # Create playlist ID
+    request = youtube_service_obj.playlists().insert(
+        part="snippet,status",
+        body={
+            "snippet": {
+                "title": "Music",
+                "description": "Favorite playlist",
+                "tags": [
+                    "sample playlist",
+                    "API call"
+                ],
+                "defaultLanguage": "en",
+                "channelId": "UCLll5qQjjpcFvYwc1zfvySA",
+                "channelTitle": "Ion"
+            },
+            "status": {
+                "privacyStatus": "private"
+            }
+        }
+    )
+    response = request.execute()
+
+    return response['id']
+
+
+new_playlist_id = playlist_id()
+
+
 def track_to_playlist(track):
 
     request = youtube_service_obj.playlistItems().insert(
             part="snippet",
             body={
                 "snippet": {
-                    "playlistId": "PLwpqU2Z90JFzKvTWGh6Dic7XgzbwTObvK",
+                    "playlistId": new_playlist_id,
                     "position": 0,
                     "resourceId": {
                         "kind": "youtube#video",
@@ -74,5 +104,3 @@ def track_to_playlist(track):
 
 if __name__ == '__main__':
     track_to_playlist()
-
-# print(json.dumps(response, indent=4))
