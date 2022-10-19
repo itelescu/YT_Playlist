@@ -6,7 +6,7 @@ from time import sleep
 from progress.spinner import MoonSpinner
 
 '''Based on search and adding items to playlist files, you can insert the path that needs to be investigated and 
-according to folder name user will receive options for parsing data'''
+according to folder name, user will receive options for parsing data'''
 
 
 # Select the path you want to investigate

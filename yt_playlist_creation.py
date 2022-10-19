@@ -45,6 +45,9 @@ if not credentials or not credentials.valid:
 # This function create a service object
 youtube_service_obj = build('youtube', 'v3', credentials=credentials)
 
+# Encapsulate private channel ID into Environment variable
+channel_id = os.environ.get('Youtube_account_ID')
+
 
 def playlist_id():
     # Create playlist ID
@@ -59,7 +62,7 @@ def playlist_id():
                     "API call"
                 ],
                 "defaultLanguage": "en",
-                "channelId": "UCLll5qQjjpcFvYwc1zfvySA",
+                "channelId": channel_id,
                 "channelTitle": "Ion"
             },
             "status": {
