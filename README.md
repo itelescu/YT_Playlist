@@ -2,7 +2,7 @@
 
 Short description: 
 A small project that will automate the task of adding your favorite music(.mp3 files) to a personal youtube playlist.
-It searches in indicated file on your machine for mp3 files and with youtube API helps you to search/create/add those tracks to freshly created playlist on your channel. 
+It searches in indicated folder on your machine for mp3 files and with youtube API, helps you to search,create and add those tracks to freshly created playlist on your YT channel. 
 
 Library used:
 
